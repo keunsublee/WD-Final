@@ -12,7 +12,7 @@ const config = {
   user: dbUser,
   host: 'localhost',
   port: 5432,
-  password: dbPwd
+  password: 'Luna2004!'
 };
     
 // Define function to create Postgres database.

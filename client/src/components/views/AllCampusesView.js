@@ -1,44 +1,28 @@
-/*==================================================
-AllCampusesView.js
+// src/components/views/AllCampusesView.js
 
-The Views component is responsible for rendering web page with data provided by the corresponding Container component.
-It constructs a React component to display all campuses.
-================================================== */
+import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 
-const AllCampusesView = (props) => {
-  // If there is no campus, display a message.
-  if (!props.allCampuses.length) {
-    return <div>There are no campuses.</div>;
-  }
-
-  // If there is at least one campus, render All Campuses view 
+const AllCampusesView = ({ allCampuses }) => {
   return (
     <div>
       <h1>All Campuses</h1>
-
-      {props.allCampuses.map((campus) => (
-        <div key={campus.id}>
-          <Link to={`/campus/${campus.id}`}>
-            <h2>{campus.name}</h2>
-          </Link>
-          <h4>campus id: {campus.id}</h4>
-          <p>{campus.address}</p>
-          <p>{campus.description}</p>
-          <hr/>
-        </div>
-      ))}
-      <br/>
-      <Link to={`/`}>
-        <button>Add New Campus</button>
-      </Link>
-      <br/><br/>
+      {allCampuses.length === 0 ? (
+        <p>No campuses found. Add a new campus!</p>
+      ) : (
+        <ul>
+          {allCampuses.map((campus) => (
+            <li key={campus.id}>{campus.name}</li>
+          ))}
+        </ul>
+      )}
+      <button onClick={() => alert("Add New Campus functionality will be implemented.")}>
+        Add New Campus
+      </button>
     </div>
   );
 };
 
-// Validate data type of the props passed to component.
 AllCampusesView.propTypes = {
   allCampuses: PropTypes.array.isRequired,
 };

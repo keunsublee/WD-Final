@@ -1,24 +1,17 @@
-/*==================================================
-StudentContainer.js
-
-The Container component is responsible for stateful logic and data fetching, and
-passes data (if any) as props to the corresponding View component.
-If needed, it also defines the component's "connect" function.
-================================================== */
 import Header from './Header';
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchStudentThunk } from "../../store/thunks";
-import { StudentView } from "../views";
+import { StudentView } from "../views";  // Assuming StudentView is a presentational component
 
 class StudentContainer extends Component {
-  // Get student data from back-end database
+  // Fetch student data when the component mounts
   componentDidMount() {
-    //getting student ID from url
+    // Retrieve student ID from the URL and fetch student data
     this.props.fetchStudent(this.props.match.params.id);
   }
 
-  // Render Student view by passing student data as props to the corresponding View component
+  // Render the Student view with the fetched data
   render() {
     return (
       <div>

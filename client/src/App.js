@@ -1,4 +1,4 @@
-import "./App.css";
+  import "./App.css";
 
 //Router
 import { Switch, Route } from "react-router-dom";
@@ -9,12 +9,9 @@ import {
   StudentContainer,
   AllCampusesContainer,
   AllStudentsContainer,
-  NewStudentContainer
+  NewStudentContainer,
 } from './components/containers';
-
-// if you create separate components for adding/editing 
-// a student or campus, make sure you add routes to those
-// components here
+import AddCampusContainer from './components/containers/AddCampusContainer';
 
 const App = () => {
   return (
@@ -26,6 +23,7 @@ const App = () => {
         <Route exact path="/students" component={AllStudentsContainer} />
         <Route exact path="/newstudent" component={NewStudentContainer} />
         <Route exact path="/student/:id" component={StudentContainer} />
+        <Route exact path="/add-campus" component={AddCampusContainer} /> {/* Added route for AddCampus */}
       </Switch>        
     </div>
   );
