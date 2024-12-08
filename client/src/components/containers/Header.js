@@ -71,6 +71,18 @@ const Header = () => {
               All Students
             </Button>
           </Link>
+          
+          <Link className={classes.links} to={'/newcampus'} >
+            <Button variant="contained" color="primary" style={{marginRight: '10px'}}>
+              ADD CAMPUS
+            </Button>
+          </Link>
+          <br></br>
+          <Link className={classes.links} to={'/newstudent'} >
+            <Button variant="contained" color="primary" style={{marginRight: '10px'}}>
+               ADD STUDENT
+            </Button>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>

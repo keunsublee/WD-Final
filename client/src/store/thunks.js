@@ -31,6 +31,50 @@ export const fetchCampusThunk = (id) => async (dispatch) => {  // The THUNK
     console.error(err);
   }
 };
+// Thunk for adding a new campus
+export const addCampusThunk = (campus) => async (dispatch) => {
+  try {
+    // Assume you have an API function `createCampus` to send the campus data to the server.
+    const res = await axios.post('/api/campuses', campus); // Example API endpoint
+
+    // Dispatch the action with the new campus data
+    dispatch(ac.addCampus(res.data));
+
+    // Return the created campus data (optional)
+    return res.data;
+  } catch (error) {
+    console.error('Error adding campus:', error);
+    throw error; // You could handle error state here if needed
+  }
+};
+
+export const editCampusThunk = (campus) => async (dispatch) => {
+  try {
+    // Assume you have an API function `createCampus` to send the campus data to the server.
+    const res = await axios.put('/api/campuses/${campusId}', campus); // Example API endpoint
+
+    dispatch(ac.editCampus(res.data));
+
+    // Return the created campus data (optional)
+    return res.data;
+  } catch (error) {
+    console.error('Error editing campus:', error);
+    throw error;
+  }
+};
+
+// Delete Student
+// THUNK CREATOR:
+export const deleteCampusThunk = campusId => async dispatch => {  // The THUNK
+  try {
+    // API "delete" call to delete student (based on "studentID") from database
+    await axios.delete(`/api/campus/${campusId}`);  
+    // Delete successful so change state with dispatch
+    dispatch(ac.deleteStudent(campusId));
+  } catch(err) {
+    console.error(err);
+  }
+};
 
 // All Students
 // THUNK CREATOR:

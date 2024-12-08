@@ -29,6 +29,19 @@ export const fetchAllStudents = (students) => {
   };
 };
 
+export const addCampus = (campus) => {
+  return {
+    type: at.ADD_CAMPUS,
+    campus,
+  };
+};
+export const editCampus = (campus) => {
+  return {
+    type: at.edit_CAMPUS,
+    campus,
+  };
+};
+
 export const addStudent = (student) => {
   return {
     type: at.ADD_STUDENT,

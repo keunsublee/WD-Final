@@ -7,20 +7,15 @@ package.json
 
 ### client
 /client/node_modules
-
-# production
 /client/build
-
-# misc
 /client/.DS_Store
 /client/*.pem
 
-# local env files
 # /client/.env*.local
+
 
 ### server
 /server/node_modules
 /server/.DS_Store
 
-# local env files
 # /server/.env
