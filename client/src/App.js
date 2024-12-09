@@ -10,9 +10,10 @@ import {
   AllCampusesContainer,
   AllStudentsContainer,
   NewStudentContainer,
+  AddCampusContainer,
+  EditCampusContainer,
+  EditStudentContainer
 } from './components/containers';
-import AddCampusContainer from './components/containers/AddCampusContainer';
-import EditCampusContainer from './components/containers/EditCampusContainer';
 
 const App = () => {
   return (
@@ -21,11 +22,13 @@ const App = () => {
         <Route exact path="/" component={HomePageContainer} />
         <Route exact path="/campuses" component={AllCampusesContainer} />
         <Route exact path="/campus/:id" component={CampusContainer} />
+        <Route exact path="/addcampus" component={AddCampusContainer} />
         <Route exact path="/students" component={AllStudentsContainer} />
         <Route exact path="/newstudent" component={NewStudentContainer} />
-        <Route exact path="/add-campus" component={AddCampusContainer} />
-        <Route exact path="/edit-campus/:id" component={EditCampusContainer} />
-      </Switch>
+        <Route exact path="/student/:id" component={StudentContainer} />
+        <Route exact path="/editcampus/:id" component={EditCampusContainer} />
+        <Route exact path="/editstudent/:id" component={EditStudentContainer} />
+      </Switch>        
     </div>
   );
 }
