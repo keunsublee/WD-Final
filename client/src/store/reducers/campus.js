@@ -9,17 +9,22 @@ import { FETCH_CAMPUS } from "../actions/actionTypes";  // Import Action Type
 
 // Define default Initial State
 const initialState = {
-  students: [],  // Empty students array
+  students: [],
+  name: "",
+  address: "",
+  description: "",
 };
 
-// REDUCER:
-const campus = (state = initialState, action) => {  // Use "initialState" as default Initial State
+// Reducer to manage campus data
+const campus = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_CAMPUS:
-      return action.payload;
+      return {
+        ...state,           // Spread previous state
+        ...action.payload,  // Replace relevant state values with data from the payload
+      };
     default:
-      // If the Reducer doesn't recognize the Action Type, returns the previous (current) State unchanged.
-      return state;
+      return state;  // Return the unchanged state if action type doesn't match
   }
 };
 
