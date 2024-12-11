@@ -17,12 +17,16 @@ const Student = db.define("student", {
     allowNull: false
   },
   email : {
-    type: Sequalize.STRING,
+    type: Sequelize.STRING,
     allowNull: false
   },
   GPA: {
     type: Sequelize.DECIMAL,
-    allowNULL: true
+    allowNULL: true,
+    validate: {
+      min: 0.0,
+      max: 4.0,
+    }
   },
   imageURL: {
     type: Sequelize.STRING,

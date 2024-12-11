@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-
 import Header from './Header';
 import AddCampusView from '../views/AddCampusView';
 import { addCampusThunk } from '../../store/thunks';
 
 const AddCampusContainer = ({ addCampus }) => {
-  const history = useHistory();
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     name: '',
