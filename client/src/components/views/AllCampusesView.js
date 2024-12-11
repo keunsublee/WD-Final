@@ -1,5 +1,4 @@
 // src/components/views/AllCampusesView.js
-
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";

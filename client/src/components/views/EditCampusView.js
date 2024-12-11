@@ -1,43 +1,63 @@
-/*==================================================
-FILLER 
-================================================== */
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const EditCampusView = ({ campus, deletecampus }) => {
-  if (!campus) {
-    return <p>Loading...</p>;  // Show loading text while campus data is being fetched
-  }
+const EditCampusView = ({ campus, deleteCampus, editCampus,handleChange, handleSubmit, handleDeleteCampus  }) => {
 
   return (
     <div>
-      <h1>Campus Details</h1>
+    <h1>Edit Campus Details</h1>
+    <form onSubmit={handleSubmit}>
       <div>
-        <h2>{campus.name}</h2>
-        <p><strong>Email:</strong> {campus.email}</p>
-        <p><strong>Address:</strong> {campus.address}</p>
-        <p><strong>Description:</strong> {campus.description}</p>
-        <p><strong>Image:</strong> <img src={campus.imageUrl} alt={campus.name} /></p>
-
-        {/* Display campus details if campus is enrolled */}
-        {campus.campus ? (
-          <div>
-            <p><strong>Enrolled at campus:</strong> {campus.campus.name}</p>
-            <Link to={`/campus/${campus.campus.id}`}>View Campus Details</Link> {/* Navigate to Campus View */}
-          </div>
-        ) : (
-          <p>This campus is not enrolled at any campus.</p>
-        )}
-
-        <div>
-          {/* Navigation to Edit campus View */}
-          <Link to={`/editcampus/${campus.id}`}>Edit campus</Link>
-        </div>
-
-        {/* Delete campus button */}
-        <button onClick={() => deletecampus(campus.id)}>Delete campus</button>
+        <label htmlFor="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={campus.name}
+          onChange={handleChange}
+        />
       </div>
-    </div>
+
+      <div>
+        <label htmlFor="address">Address:</label>
+        <input
+          type="text"
+          id="address"
+          name="address"
+          value={campus.address}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="description">Description:</label>
+        <textarea
+          id="description"
+          name="description"
+          value={campus.description}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="imageUrl">Image URL:</label>
+        <input
+          type="text"
+          id="imageUrl"
+          name="imageUrl"
+          value={campus.imageUrl}
+          onChange={handleChange}
+        />
+      </div>
+      <button type="submit">Save Changes</button>
+    </form>
+  
+          {/* Delete campus button */}
+          <button onClick={() => deleteCampus(campus.id)}>Delete Campus</button>
+     
+
+        {/* Navigation back to campuses */}
+        <Link to="/campuses">Back to Campuses</Link>
+      </div>
+   
   );
 };
 

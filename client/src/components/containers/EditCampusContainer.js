@@ -1,10 +1,13 @@
+//INCOMPLETE
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { fetchCampusThunk, editCampusThunk } from '../../store/thunks';
+import { fetchCampusThunk, editCampusThunk, deleteCampusThunk } from '../../store/thunks';
 import EditCampusView from '../views/EditCampusView';
+import Header from './Header';
 
-const EditCampusContainer = ({ fetchCampus, editCampus, campus }) => {
+
+const EditCampusContainer = ({ campus, fetchCampus, editCampus, deleteCampus }) => {
   const { id } = useParams();
   const history = useHistory();
   const [formData, setFormData] = useState({
@@ -15,17 +18,16 @@ const EditCampusContainer = ({ fetchCampus, editCampus, campus }) => {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fetchCampus(id);
+    if (campus) {
       setFormData({
-        name: campus.name,
-        address: campus.address,
-        description: campus.description,
-        imageUrl: campus.imageUrl
+        name: campus.name || '',
+        address: campus.address || '',
+        description: campus.description || '',
+        imageUrl: campus.imageUrl || ''
       });
-    };
-    fetchData();
-  }, [id, fetchCampus, campus]);
+    }
+  }, [campus]);
+
 
   const handleChange = (e) => {
     setFormData({
@@ -40,12 +42,21 @@ const EditCampusContainer = ({ fetchCampus, editCampus, campus }) => {
     history.push(`/campus/${id}`);
   };
 
+  const handleDeleteCampus = async (campusId) => {
+    await deleteCampus(campusId);
+    history.push('/campuses'); // Redirect to the campuses page
+  };
+
+
   return (
     <div>
+      <Header />
       <EditCampusView 
+        campus={campus}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         formData={formData}
+        deleteCampus={handleDeleteCampus}
       />
     </div>
   );
@@ -60,7 +71,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchCampus: (id) => dispatch(fetchCampusThunk(id)),
-    editCampus: (id, campus) => dispatch(editCampusThunk(id, campus)),
+    editCampus: (campus) => dispatch(editCampusThunk(campus)),
+    deleteCampus: (id) => dispatch(deleteCampusThunk(id))
   };
 };
 

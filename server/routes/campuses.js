@@ -1,16 +1,8 @@
-/*==================================================
-/routes/campuses.js
 
-It defines all the campuses-related routes.
-==================================================*/
-// Import Express module
 const express = require('express');
-// Create an Express router function called "router"
 const router = express.Router();
-// Import database models
 const { Student, Campus } = require('../database/models');
 
-// Import a middleware to replace "try and catch" for request handler, for a concise coding (fewer lines of code)
 const ash = require('express-async-handler');
 
 /* GET ALL CAMPUSES: async/await using "try-catch" */

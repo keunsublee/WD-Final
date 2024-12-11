@@ -1,44 +1,80 @@
-//FILLER CODE
 import Header from './Header';
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
+import { useHistory, useParams } from 'react-router-dom';
 import { connect } from "react-redux";
-import { fetchStudentThunk } from "../../store/thunks";
-import { StudentView } from "../views";
+import { fetchStudentThunk, editStudentThunk, deleteStudentThunk } from "../../store/thunks";
+import EditStudentView from '../views/EditStudentView';
 
-class EditStudentContainer extends Component {
-  // Get student data from back-end database
-  componentDidMount() {
-    //getting student ID from url
-    this.props.fetchStudent(this.props.match.params.id);
-  }
+const EditStudentContainer = ({ student, fetchStudent, editStudentThunk, deleteStudentThunk }) => {
+  const { id } = useParams();
+  const history = useHistory();
 
-  // Render Student view by passing student data as props to the corresponding View component
-  render() {
-    return (
-      <div>
-        <Header />
-        <StudentView student={this.props.student} />
-      </div>
-    );
-  }
-}
+  const [formData, setFormData] = useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    gpa: 0,
+    imageUrl: ''
+  });
 
-// The following 2 input arguments are passed to the "connect" function used by "StudentContainer" to connect to Redux Store.  
-// The following 2 input arguments are passed to the "connect" function used by "AllCampusesContainer" component to connect to Redux Store.
-const mapState = (state) => {
-  return {
-    student: state.student,  // Get the State object from Reducer "student"
+  useEffect(() => {
+    fetchStudent(id);
+  }, [fetchStudent, id]);
+
+  useEffect(() => {
+    if (student) {
+      setFormData({
+        firstname: student.firstname || '',
+        lastname: student.lastname || '',
+        email: student.email || '',
+        gpa: student.gpa || '',
+        imageUrl: student.imageUrl || ''
+      });
+    }
+  }, [student]);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
-};
-// 2. The "mapDispatch" argument is used to dispatch Action (Redux Thunk) to Redux Store.
-// The "mapDispatch" calls the specific Thunk to dispatch its action. The "dispatch" is a function of Redux Store.
-const mapDispatch = (dispatch) => {
-  return {
-    fetchStudent: (id) => dispatch(fetchStudentThunk(id)),
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await editStudentThunk(id, formData);
+    history.push(`/students/${id}`); 
   };
+
+  const handleDeleteStudent = async () => {
+    await deleteStudentThunk(id);
+    history.push('/students'); 
+  };
+
+  return (
+    <div>
+      <Header />
+      <EditStudentView 
+        student={formData} 
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        handleDeleteStudent={handleDeleteStudent}
+      />
+    </div>
+  );
 };
 
-// Export store-connected container by default
-// StudentContainer uses "connect" function to connect to Redux Store and to read values from the Store 
-// (and re-read the values when the Store State updates).
+// Map state to props
+const mapState = (state) => ({
+  student: state.student, // Get the student data from Redux
+});
+
+// Map dispatch to props
+const mapDispatch = (dispatch) => ({
+  fetchStudent: (id) => dispatch(fetchStudentThunk(id)),
+  editStudentThunk: (id, student) => dispatch(editStudentThunk(id, student)),
+  deleteStudentThunk: (id) => dispatch(deleteStudentThunk(id)),
+});
+
+// Connect the component to the Redux store
 export default connect(mapState, mapDispatch)(EditStudentContainer);
