@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const AllCampusesView = ({ allCampuses }) => {
+const AllCampusesView = ({ allCampuses, deleteCampus, editCampus }) => {
 
   if (!allCampuses|| allCampuses.length === 0) {
     return (
@@ -29,7 +29,11 @@ const AllCampusesView = ({ allCampuses }) => {
         <h4>Campus ID: {campus.id}</h4>
         <p>{campus.address}</p>
         <p>{campus.description}</p>
+        <br/>
+        <button onClick={() => editCampus(campus.id)}>Edit Campus</button>
+        <button onClick={() => deleteCampus(campus.id)}>Delete Campus</button>
         <hr/>
+       
       </div>
     ))}
     <br />
