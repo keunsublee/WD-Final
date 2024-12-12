@@ -1,67 +1,76 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-
+import { Redirect, useHistory } from 'react-router-dom';
 import Header from './Header';
 import AddCampusView from '../views/AddCampusView';
 import { addCampusThunk } from '../../store/thunks';
 
 const AddCampusContainer = ({ addCampus }) => {
-  const history = useHistory();
   const [errors, setErrors] = useState({});
+  const [redirect, setRedirect] = useState(false);
+  const [redirectId, setRedirectId] = useState(null);
+  const history = useHistory();
   const [formData, setFormData] = useState({
     name: '',
     address: '',
     description: '',
     imageUrl: '',
   });
-  const [redirect, setRedirect] = useState(false);
-  const [redirectId, setRedirectId] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
-    // Real-time validation
-    validateForm({ ...formData, [e.target.name]: e.target.value });
+    // // Real-time validation
+    // validateForm({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const validateForm = (data) => {
-    const newErrors = {};
-    if (!data.name.trim()) newErrors.name = 'Campus name is required.';
-    if (!data.address.trim()) newErrors.address = 'Address is required.';
-    if (!data.description.trim()) newErrors.description = 'Description is required.';
-    if (data.imageUrl && !/^https?:\/\//.test(data.imageUrl)) {
-      newErrors.imageUrl = "Invalid URL. Must start with 'http://' or 'https://'";
-    }
-    setErrors(newErrors);
-  };
+  // const validateForm = (data) => {
+  //   const newErrors = {};
+  //   if (!data.name.trim()) newErrors.name = 'Campus name is required.';
+  //   if (!data.address.trim()) newErrors.address = 'Address is required.';
+  //   if (!data.description.trim()) newErrors.description = 'Description is required.';
+  //   if (data.imageUrl && !/^https?:\/\//.test(data.imageUrl)) {
+  //     newErrors.imageUrl = "Invalid URL. Must start with 'http://' or 'https://'";
+  //   }
+  //   setErrors(newErrors);
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Final validation
-    if (Object.keys(errors).length === 0 && Object.values(formData).every((val) => val.trim())) {
-      let campus = {
-        name: formData.name,
-        address: formData.address,
-        description: formData.description,
-        imageUrl: formData.imageUrl,
-      };
-
-      let newCampus = await addCampus(campus);
-      setRedirectId(newCampus.id);
-      setRedirect(true);
-    } else {
-      alert('Please fix form errors before submitting.');
+    let campus = {
+      name: formData.name,
+      address: formData.address,
+      description: formData.description,
+      imageUrl: formData.imageUrl,
     }
-  };
+    await addCampus(campus);
+    history.push(`/campuses`);
+    };
 
-  if (redirect) {
-    return <Redirect to={`/campus/${redirectId}`} />; // Redirect to the newly created campus page
-  }
+  //   // Final validation
+  //   if (Object.keys(errors).length === 0 && Object.values(formData).every((val) => val.trim())) {
+  //     let campus = {
+  //       name: formData.name,
+  //       address: formData.address,
+  //       description: formData.description,
+  //       imageUrl: formData.imageUrl,
+  //     };
+
+  //     let newCampus = await addCampus(campus);
+  //     setRedirectId(newCampus.id);
+  //     setRedirect(true);
+  //   } else {
+  //     alert('Please fix form errors before submitting.');
+  //   }
+  // };
+
+  // if (redirect) {
+  //   return <Redirect to={`/campus/${redirectId}`} />; // Redirect to the newly created campus page
+  // }
+
 
   return (
     <div>
@@ -70,7 +79,7 @@ const AddCampusContainer = ({ addCampus }) => {
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         formData={formData}
-        errors={errors}
+        //errors={errors}
       />
     </div>
   );

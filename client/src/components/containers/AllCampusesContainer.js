@@ -1,26 +1,47 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchAllCampusesThunk } from '../../store/thunks';
+import { AllCampusesView } from '../views';
+import Header from './Header';
 
-const AllCampusesContainer = ({ campuses = [] }) => { // Default campuses as an empty array
+const AllCampusesContainer = ({ allCampuses, fetchAllCampuses }) => {
+  // Fetch all campuses data from the back-end database when the component mounts
+  useEffect(() => {
+    fetchAllCampuses();
+  }, [fetchAllCampuses]);
+
   return (
     <div>
-      <h1>All Campuses</h1>
-      {campuses.length === 0 ? (
-        <p>No campuses found. Add a new campus!</p>
-      ) : (
-        <ul>
-          {campuses.map((campus) => (
-            <li key={campus.id}>{campus.name}</li>
-          ))}
-        </ul>
-      )}
-      
-      {/* Link to the AddCampusContainer */}
-      <Link to="/add-campus">
-        <button>Add New Campus</button>
-      </Link>
+      <Header />
+      <AllCampusesView allCampuses={allCampuses} />
     </div>
   );
 };
 
-export default AllCampusesContainer;
+// The "mapState" argument specifies the data from Redux Store that the component needs.
+// The "mapState" is called when the Store State changes, and it returns a data object of "allCampuses".
+const mapState = (state) => {
+  return {
+    allCampuses: state.allCampuses,  // Get the State object from Reducer "allCampuses"
+  };
+};
+
+// The "mapDispatch" argument is used to dispatch Action (Redux Thunk) to Redux Store.
+// The "mapDispatch" calls the specific Thunk to dispatch its action. The "dispatch" is a function of Redux Store.
+const mapDispatch = (dispatch) => {
+  return {
+    fetchAllCampuses: () => dispatch(fetchAllCampusesThunk()),
+  };
+};
+
+// Type check props
+AllCampusesContainer.propTypes = {
+  allCampuses: PropTypes.array.isRequired,
+  fetchAllCampuses: PropTypes.func.isRequired,
+};
+
+// Export store-connected container by default
+// AllCampusesContainer uses "connect" function to connect to Redux Store and to read values from the Store 
+// (and re-read the values when the Store State updates).
+export default connect(mapState, mapDispatch)(AllCampusesContainer);

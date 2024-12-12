@@ -1,27 +1,16 @@
-/*==================================================
-AllCampusesView.js
-
-The Views component is responsible for rendering web page with data provided by the corresponding Container component.
-It constructs a React component to display all campuses.
-================================================== */
-import React from 'react';
+// src/components/views/AllCampusesView.js
+import React from "react";
 import PropTypes from "prop-types";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
+const AllCampusesView = ({ allCampuses }) => {
 
-const AllCampusesView = (props) => {
-  const history = useHistory();
-  
-  const goBack = () => {
-    history.push('/');
-  };
-
-  if (!props.allCampuses.length) {
+  if (!allCampuses|| allCampuses.length === 0) {
     return (
       <div>
         <div>There are no campuses.</div>
         <div>
-          <Link to={`addcampus`}>
+          <Link to={"/addcampus"}>
             <button>Add New Campus</button>
           </Link>
         </div>
@@ -29,33 +18,29 @@ const AllCampusesView = (props) => {
     );
   }
   
-  // If there is at least one campus, render All Campuses view 
   return (
     <div>
-      <h1>All Campuses</h1>
-      <button className="back-button" onClick={goBack}>Go Back</button>
-
-      {props.allCampuses.map((campus) => (
-        <div key={campus.id}>
-          <Link to={`/campus/${campus.id}`}>
-            <h2>{campus.name}</h2>
-          </Link>
-          <h4>campus id: {campus.id}</h4>
-          <p>{campus.address}</p>
-          <p>{campus.description}</p>
-          <hr/>
-        </div>
-      ))}
-      <br/>
-      <Link to={`/addcampus`}>
-        <button>Add New Campus</button>
-      </Link>
-      <br/><br/>
-    </div>
-  );
+    <h1>All Campuses</h1>
+    {allCampuses.map((campus) => (
+      <div key={campus.id}>
+        <Link to={`/campus/${campus.id}`}>
+          <h2>{campus.name}</h2>
+        </Link>
+        <h4>Campus ID: {campus.id}</h4>
+        <p>{campus.address}</p>
+        <p>{campus.description}</p>
+        <hr/>
+      </div>
+    ))}
+    <br />
+    <Link to={"/addcampus"}>
+      <button>Add New Campus</button>
+    </Link>
+    <br /><br />
+  </div>
+);
 };
 
-// Validate data type of the props passed to component.
 AllCampusesView.propTypes = {
   allCampuses: PropTypes.array.isRequired,
 };

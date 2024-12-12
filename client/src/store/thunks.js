@@ -5,6 +5,7 @@ It contains all Thunk Creators and Thunks.
 ================================================== */
 import * as ac from './actions/actionCreators';  // Import Action Creators ("ac" keyword Action Creator)
 const axios = require('axios');
+axios.default.baseURL = 'http://localhost:5001';  
 
 //All Campuses
 // THUNK CREATOR:
@@ -48,10 +49,10 @@ export const addCampusThunk = (campus) => async (dispatch) => {
   }
 };
 
-export const editCampusThunk = (campus) => async (dispatch) => {
+export const editCampusThunk = (id, campus) => async (dispatch) => {
   try {
     // Assume you have an API function `createCampus` to send the campus data to the server.
-    const res = await axios.put('/api/campuses/${campusId}', campus); // Example API endpoint
+    const res = await axios.put(`/api/campuses/${id}`, campus); // Example API endpoint
 
     dispatch(ac.editCampus(res.data));
 
@@ -63,12 +64,11 @@ export const editCampusThunk = (campus) => async (dispatch) => {
   }
 };
 
-// Delete Student
 // THUNK CREATOR:
 export const deleteCampusThunk = campusId => async dispatch => {  // The THUNK
   try {
     // API "delete" call to delete student (based on "studentID") from database
-    await axios.delete(`/api/campus/${campusId}`);  
+    await axios.delete(`/api/campuses/${campusId}`);  
     // Delete successful so change state with dispatch
     dispatch(ac.deleteStudent(campusId));
   } catch(err) {
@@ -120,12 +120,13 @@ export const deleteStudentThunk = studentId => async dispatch => {  // The THUNK
 
 // Edit Student
 // THUNK CREATOR:
-export const editStudentThunk = student => async dispatch => {  // The THUNK
+export const editStudentThunk = (id, student) => async dispatch => {  // The THUNK
   try {
     // API "put" call to update student (based on "id" and "student" object's data) from database
-    let updatedStudent = await axios.put(`/api/students/${student.id}`, student); 
+    let updatedStudent = await axios.put(`/api/students/${id}`, student); 
     // Update successful so change state with dispatch
-    dispatch(ac.editStudent(updatedStudent));
+    dispatch(ac.editStudent(updatedStudent.data));
+    return updatedStudent.data;
   } catch(err) {
     console.error(err);
   }

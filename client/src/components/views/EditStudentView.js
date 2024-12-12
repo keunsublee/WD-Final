@@ -1,42 +1,81 @@
-/*==================================================
-FILLER 
-================================================== */
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const EditStudentView = ({ student, deleteStudent }) => {
-  if (!student) {
-    return <p>Loading...</p>;  // Show loading text while student data is being fetched
-  }
+const EditStudentView = ({ campus,student, handleChange, handleSubmit, handleDeleteStudent }) => {
 
   return (
     <div>
       <h1>Edit Student Details</h1>
-      <div>
-        <h2>{student.name}</h2>
-        <p><strong>Email:</strong> {student.email}</p>
-        <p><strong>Address:</strong> {student.address}</p>
-        <p><strong>Description:</strong> {student.description}</p>
-        <p><strong>Image:</strong> <img src={student.imageUrl} alt={student.name} /></p>
-
-        {/* Display campus details if student is enrolled */}
-        {student.campus ? (
-          <div>
-            <p><strong>Enrolled at campus:</strong> {student.campus.name}</p>
-            <Link to={`/campus/${student.campus.id}`}>View Campus Details</Link> {/* Navigate to Campus View */}
-          </div>
-        ) : (
-          <p>This student is not enrolled at any campus.</p>
-        )}
-
+      <form onSubmit={handleSubmit}>
         <div>
-          {/* Navigation to Edit Student View */}
-          <Link to={`/edit-student/${student.id}`}>Edit Student</Link>
+          <label htmlFor="firstname">First Name:</label>
+          <input
+            type="text"
+            id="firstname"
+            name="firstname"
+            value={student.firstname}
+            onChange={handleChange}
+          />
         </div>
+        <br/>
+        <div>
+          <label htmlFor="lastname">Last Name:</label>
+          <input
+            type="text"
+            id="lastname"
+            name="lastname"
+            value={student.lastname}
+            onChange={handleChange}
+          />
+        </div>
+        <br/>
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={student.email}
+            onChange={handleChange}
+          />
+        </div>
+        <br/>
+        <div>
+          <label htmlFor="GPA">GPA:</label>
+          <textarea
+            id="GPA"
+            name="GPA"
+            value={student.GPA}
+            onChange={handleChange}
+          />
+        </div>
+        <br/>
+        <div>
+          <label htmlFor="imageUrl">Image URL:</label>
+          <input
+            type="text"
+            id="imageUrl"
+            name="imageUrl"
+            value={student.imageUrl}
+            onChange={handleChange}
+          />
+        </div>
+        <br/>
+        <button type="submit">Save Changes</button>
+        <br/> <br/>
+      </form>
 
-        {/* Delete student button */}
-        <button onClick={() => deleteStudent(student.id)}>Delete Student</button>
-      </div>
+      {/* Display campus details if student is enrolled */}
+      {student.campus ? (
+        <div>
+          <p><strong>Enrolled at campus:</strong> {student.campus.name}</p>
+          <Link to={`/campus/${student.campus.id}`}>View Campus Details</Link>
+        </div>
+      ) : (
+        <p>This student is not enrolled at any campus.</p>
+      )}
+       <br/>
+      <button onClick={handleDeleteStudent}>Delete Student</button>
     </div>
   );
 };

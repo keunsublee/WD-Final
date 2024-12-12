@@ -5,21 +5,26 @@ The Views component is responsible for rendering web page with data provided by 
 It constructs a React component to display the single student view page.
 ================================================== */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const StudentView = ({ student, deleteStudent }) => {
-  if (!student) {
-    return <p>Loading...</p>;  // Show loading text while student data is being fetched
+  const history = useHistory();
+  //const goback = history.push(`/students/${student.id}`)
+if (!student) {
+    return (
+      <div>
+        <p>. . . </p>
+      </div>
+    );
   }
 
   return (
     <div>
       <h1>Student Details</h1>
       <div>
-        <h2>{student.name}</h2>
+        <h2>{`${student.firstname} ${student.lastname}`}</h2>
         <p><strong>Email:</strong> {student.email}</p>
-        <p><strong>Address:</strong> {student.address}</p>
-        <p><strong>Description:</strong> {student.description}</p>
+        <p><strong>GPA:</strong> {student.GPA}</p>
         <p><strong>Image:</strong> <img src={student.imageUrl} alt={student.name} /></p>
 
         {/* Display campus details if student is enrolled */}
@@ -31,17 +36,20 @@ const StudentView = ({ student, deleteStudent }) => {
         ) : (
           <p>This student is not enrolled at any campus.</p>
         )}
-
+       <br/>
         <div>
           {/* Navigation to Edit Student View */}
-          <Link to={`/edit-student/${student.id}`}>Edit Student</Link>
+          <Link to={`/editstudent/${student.id}`}>Edit Student</Link>
         </div>
-
+        <br/>
         {/* Delete student button */}
         <button onClick={() => deleteStudent(student.id)}>Delete Student</button>
+
+        <br/>
       </div>
     </div>
   );
 };
+// <button onClick={() => goback} >Back to Student View</button>
 
 export default StudentView;

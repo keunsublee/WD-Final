@@ -17,14 +17,18 @@ const Student = db.define("student", {
     allowNull: false
   },
   email : {
-    type: Sequalize.STRING,
+    type: Sequelize.STRING,
     allowNull: false
   },
   GPA: {
     type: Sequelize.DECIMAL,
-    allowNULL: true
+    allowNull: true,
+    validate: {
+      min: 0.0,
+      max: 4.0,
+    }
   },
-  imageURL: {
+  imageUrl: {
     type: Sequelize.STRING,
     allowNull: true,
     defaultValue: "https://via.placeholder.com/150"
