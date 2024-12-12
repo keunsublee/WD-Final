@@ -31,7 +31,7 @@ if (!student) {
         {student.campus ? (
           <div>
             <p><strong>Enrolled at campus:</strong> {student.campus.name}</p>
-            <Link to={`/campus/${student.campus.id}`}>View Campus Details</Link> {/* Navigate to Campus View */}
+            <Link to={`/campus/${student.campus.id}`}><button>View Campus Details</button> </Link> {/* Navigate to Campus View */}
           </div>
         ) : (
           <p>This student is not enrolled at any campus.</p>
@@ -39,7 +39,8 @@ if (!student) {
        <br/>
         <div>
           {/* Navigation to Edit Student View */}
-          <Link to={`/editstudent/${student.id}`}>Edit Student</Link>
+          <Link to={`/editstudent/${student.id}`}>
+          <button>Edit Student</button>   </Link>
         </div>
         <br/>
         {/* Delete student button */}

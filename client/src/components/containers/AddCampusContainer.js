@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import Header from './Header';
 import AddCampusView from '../views/AddCampusView';
-import { addCampusThunk } from '../../store/thunks';
+import { addCampusThunk, fetchAllCampusesThunk } from '../../store/thunks';
 
-const AddCampusContainer = ({ addCampus }) => {
+
+const AddCampusContainer = ({ addCampus, fetchAllCampuses }) => {
   const [errors, setErrors] = useState({});
   const [redirect, setRedirect] = useState(false);
   const [redirectId, setRedirectId] = useState(null);
@@ -15,6 +16,8 @@ const AddCampusContainer = ({ addCampus }) => {
     address: '',
     description: '',
     imageUrl: '',
+    redirect: false,
+    redirectId: null,
   });
 
   const handleChange = (e) => {
@@ -22,20 +25,7 @@ const AddCampusContainer = ({ addCampus }) => {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    // // Real-time validation
-    // validateForm({ ...formData, [e.target.name]: e.target.value });
   };
-
-  // const validateForm = (data) => {
-  //   const newErrors = {};
-  //   if (!data.name.trim()) newErrors.name = 'Campus name is required.';
-  //   if (!data.address.trim()) newErrors.address = 'Address is required.';
-  //   if (!data.description.trim()) newErrors.description = 'Description is required.';
-  //   if (data.imageUrl && !/^https?:\/\//.test(data.imageUrl)) {
-  //     newErrors.imageUrl = "Invalid URL. Must start with 'http://' or 'https://'";
-  //   }
-  //   setErrors(newErrors);
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,34 +33,21 @@ const AddCampusContainer = ({ addCampus }) => {
     let campus = {
       name: formData.name,
       address: formData.address,
-      description: formData.description,
+      description: formData.description || '',
       imageUrl: formData.imageUrl,
-    }
-    await addCampus(campus);
-    history.push(`/campuses`);
     };
 
-  //   // Final validation
-  //   if (Object.keys(errors).length === 0 && Object.values(formData).every((val) => val.trim())) {
-  //     let campus = {
-  //       name: formData.name,
-  //       address: formData.address,
-  //       description: formData.description,
-  //       imageUrl: formData.imageUrl,
-  //     };
+    let newCampus = await addCampus(campus);
+    if (newCampus && newCampus.id) {
+      setRedirectId(newCampus.id);
+      setRedirect(true);
+    }
+  };
 
-  //     let newCampus = await addCampus(campus);
-  //     setRedirectId(newCampus.id);
-  //     setRedirect(true);
-  //   } else {
-  //     alert('Please fix form errors before submitting.');
-  //   }
-  // };
-
-  // if (redirect) {
-  //   return <Redirect to={`/campus/${redirectId}`} />; // Redirect to the newly created campus page
-  // }
-
+  if (redirect) {
+    fetchAllCampuses();
+    return <Redirect to={`/campus/${redirectId}`} />;
+  }
 
   return (
     <div>
@@ -88,6 +65,7 @@ const AddCampusContainer = ({ addCampus }) => {
 const mapDispatch = (dispatch) => {
   return {
     addCampus: (campus) => dispatch(addCampusThunk(campus)), // Add campus instead of student
+    fetchAllCampuses: () => dispatch(fetchAllCampusesThunk())
   };
 };
 
