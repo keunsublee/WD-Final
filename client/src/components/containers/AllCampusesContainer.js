@@ -13,13 +13,14 @@ const AllCampusesContainer = ({ allCampuses, fetchAllCampuses, editCampus, delet
     fetchAllCampuses();
   }, [fetchAllCampuses]);
   
-  const handleDeleteCampus = async (studentId) => {
-    await deleteCampus(studentId);
+  const handleDeleteCampus = async (campus) => {
+    await deleteCampus(campus);
+    fetchAllCampuses();
     history.push('/campuses'); // Redirect to the campuses page
   };
 
-  const handleEditCampus = (campusId) => {
-    history.push(`/campus/${campusId}`); 
+  const handleEditCampus = (campus) => {
+    history.push(`/editcampus/${campus}`); 
   };
 
 

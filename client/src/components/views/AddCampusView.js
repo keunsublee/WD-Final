@@ -24,7 +24,6 @@ const AddCampusView = ({ handleChange, handleSubmit, formData }) => (
       placeholder="Description" 
       value={formData.description} 
       onChange={handleChange} 
-      required
     />
       <br/>
       <br/>

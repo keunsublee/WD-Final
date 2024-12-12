@@ -1,20 +1,23 @@
-//INCOMPLETE
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
-import { fetchCampusThunk, editCampusThunk, deleteCampusThunk } from '../../store/thunks';
+import { Redirect, useParams, useHistory } from 'react-router-dom';
+import { fetchCampusThunk, editCampusThunk, deleteCampusThunk, fetchAllCampusesThunk } from '../../store/thunks';
 import EditCampusView from '../views/EditCampusView';
 import Header from './Header';
 
-
-const EditCampusContainer = ({ campus, fetchCampus, editCampus, deleteCampus }) => {
+const EditCampusContainer = ({ campus, fetchCampus, editCampus, deleteCampus, fetchAllCampuses }) => {
   const { id } = useParams();
+  const [redirect, setRedirect] = useState(false);
+  const [redirectId, setRedirectId] = useState(null);
   const history = useHistory();
+  
   const [formData, setFormData] = useState({
     name: '',
     address: '',
     description: '',
-    imageUrl: ''
+    imageUrl: '',
+    redirect: false,
+    redirectId: null,
   });
 
   useEffect(() => {
@@ -32,7 +35,6 @@ const EditCampusContainer = ({ campus, fetchCampus, editCampus, deleteCampus }) 
     }
   }, [campus]);
 
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -43,14 +45,20 @@ const EditCampusContainer = ({ campus, fetchCampus, editCampus, deleteCampus }) 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await editCampus(id, formData);
-    history.push(`/campus/${id}`);
+    setRedirectId(id);
+    setRedirect(true);
   };
 
   const handleDeleteCampus = async () => {
     await deleteCampus(id);
-    history.push('/campuses'); // Redirect to the campuses page
+    fetchAllCampuses();
+    history.push('/campuses');
   };
 
+  if (redirect) {
+    fetchAllCampuses();
+    return <Redirect to={`/campus/${redirectId}`} />;
+  }
 
   return (
     <div>
@@ -76,15 +84,9 @@ const mapDispatch = (dispatch) => {
   return {
     fetchCampus: (id) => dispatch(fetchCampusThunk(id)),
     editCampus: (id, formData) => dispatch(editCampusThunk(id, formData)),
-    deleteCampus: (id) => dispatch(deleteCampusThunk(id))
+    deleteCampus: (id) => dispatch(deleteCampusThunk(id)),
+    fetchAllCampuses: () => dispatch(fetchAllCampusesThunk())
   };
 };
 
-// 2. The "mapDispatch" argument is used to dispatch Action (Redux Thunk) to Redux Store.
-// The "mapDispatch" calls the specific Thunk to dispatch its action. The "dispatch" is a function of Redux Store.
-
-
-// Export store-connected container by default
-// campusContainer uses "connect" function to connect to Redux Store and to read values from the Store 
-// (and re-read the values when the Store State updates).
 export default connect(mapState, mapDispatch)(EditCampusContainer);

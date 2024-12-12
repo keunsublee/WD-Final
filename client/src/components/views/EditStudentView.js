@@ -15,6 +15,7 @@ const EditStudentView = ({ campus,student, handleChange, handleSubmit, handleDel
             name="firstname"
             value={student.firstname}
             onChange={handleChange}
+            required
           />
         </div>
         <br/>
@@ -26,6 +27,7 @@ const EditStudentView = ({ campus,student, handleChange, handleSubmit, handleDel
             name="lastname"
             value={student.lastname}
             onChange={handleChange}
+            required
           />
         </div>
         <br/>
@@ -37,6 +39,7 @@ const EditStudentView = ({ campus,student, handleChange, handleSubmit, handleDel
             name="email"
             value={student.email}
             onChange={handleChange}
+            required
           />
         </div>
         <br/>

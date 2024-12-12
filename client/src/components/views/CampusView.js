@@ -19,8 +19,8 @@ const CampusView = ({ campus, deleteStudent, deleteCampus, editCampus }) => {
   return (
     <div>
       <h1>{campus.name}</h1>
-      <p>{campus.address}</p>
-      <p>{campus.description}</p>
+      <p><strong>Address:</strong> {campus.address}</p>
+      <p><strong>Description:</strong> {campus.description}</p>
       <p> <img src={campus.imageUrl} alt={campus.name} /></p>
 
       {campus.students.map( student => {
