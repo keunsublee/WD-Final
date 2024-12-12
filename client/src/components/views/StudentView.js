@@ -25,7 +25,7 @@ if (!student) {
         <h2>{`${student.firstname} ${student.lastname}`}</h2>
         <p><strong>Email:</strong> {student.email}</p>
         <p><strong>GPA:</strong> {student.GPA}</p>
-        <p><strong>Image:</strong> <img src={student.imageUrl} alt={student.name} /></p>
+        <p><img src={student.imageUrl} alt={student.name} /></p>
 
         {/* Display campus details if student is enrolled */}
         {student.campus ? (

@@ -1,20 +1,36 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchAllCampusesThunk } from '../../store/thunks';
+import { useHistory } from 'react-router-dom';
+import { fetchAllCampusesThunk, editCampusThunk, deleteCampusThunk } from '../../store/thunks';
 import { AllCampusesView } from '../views';
 import Header from './Header';
 
-const AllCampusesContainer = ({ allCampuses, fetchAllCampuses }) => {
+const AllCampusesContainer = ({ allCampuses, fetchAllCampuses, editCampus, deleteCampus }) => {
   // Fetch all campuses data from the back-end database when the component mounts
+  const history = useHistory();
   useEffect(() => {
     fetchAllCampuses();
   }, [fetchAllCampuses]);
+  
+  const handleDeleteCampus = async (studentId) => {
+    await deleteCampus(studentId);
+    history.push('/campuses'); // Redirect to the campuses page
+  };
+
+  const handleEditCampus = (campusId) => {
+    history.push(`/campus/${campusId}`); 
+  };
+
 
   return (
     <div>
       <Header />
-      <AllCampusesView allCampuses={allCampuses} />
+      <AllCampusesView 
+      allCampuses={allCampuses} 
+      deleteCampus={handleDeleteCampus}  
+      editCampus={handleEditCampus} 
+      />
     </div>
   );
 };
@@ -32,6 +48,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchAllCampuses: () => dispatch(fetchAllCampusesThunk()),
+    editCampus: (campus) => dispatch(editCampusThunk(campus)),
+    deleteCampus: (campusId) => dispatch(deleteCampusThunk(campusId)),
   };
 };
 
