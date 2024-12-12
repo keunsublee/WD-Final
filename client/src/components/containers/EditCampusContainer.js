@@ -18,6 +18,10 @@ const EditCampusContainer = ({ campus, fetchCampus, editCampus, deleteCampus }) 
   });
 
   useEffect(() => {
+    fetchCampus(id);
+  }, [fetchCampus, id]);
+
+  useEffect(() => {
     if (campus) {
       setFormData({
         name: campus.name || '',
@@ -42,8 +46,8 @@ const EditCampusContainer = ({ campus, fetchCampus, editCampus, deleteCampus }) 
     history.push(`/campus/${id}`);
   };
 
-  const handleDeleteCampus = async (campusId) => {
-    await deleteCampus(campusId);
+  const handleDeleteCampus = async () => {
+    await deleteCampus(id);
     history.push('/campuses'); // Redirect to the campuses page
   };
 
@@ -52,7 +56,7 @@ const EditCampusContainer = ({ campus, fetchCampus, editCampus, deleteCampus }) 
     <div>
       <Header />
       <EditCampusView 
-        campus={campus}
+        campus={formData}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         formData={formData}
@@ -71,7 +75,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchCampus: (id) => dispatch(fetchCampusThunk(id)),
-    editCampus: (id, campus) => dispatch(editCampusThunk(id, campus)),
+    editCampus: (id, formData) => dispatch(editCampusThunk(id, formData)),
     deleteCampus: (id) => dispatch(deleteCampusThunk(id))
   };
 };

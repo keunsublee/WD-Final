@@ -42,7 +42,6 @@ const EditStudentContainer = ({ student, fetchStudent, editStudentThunk, deleteS
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('formData:',  formData.firstname, formData.lastname, formData.GPA, formData.email);
     await editStudentThunk(id, formData);
     history.push(`/student/${id}`); 
   };
