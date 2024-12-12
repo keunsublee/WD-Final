@@ -10,7 +10,13 @@ import { Link, useHistory } from 'react-router-dom';
 const StudentView = ({ student, deleteStudent }) => {
   const history = useHistory();
   //const goback = history.push(`/students/${student.id}`)
-
+if (!student) {
+    return (
+      <div>
+        <p>. . . </p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -30,16 +36,16 @@ const StudentView = ({ student, deleteStudent }) => {
         ) : (
           <p>This student is not enrolled at any campus.</p>
         )}
-
+       <br/>
         <div>
           {/* Navigation to Edit Student View */}
           <Link to={`/editstudent/${student.id}`}>Edit Student</Link>
         </div>
-
+        <br/>
         {/* Delete student button */}
         <button onClick={() => deleteStudent(student.id)}>Delete Student</button>
 
-       
+        <br/>
       </div>
     </div>
   );

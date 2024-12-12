@@ -42,7 +42,7 @@ const EditStudentContainer = ({ student, fetchStudent, editStudentThunk, deleteS
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('formData:', formData.GPA);
+    console.log('formData:',  formData.firstname, formData.lastname, formData.GPA, formData.email);
     await editStudentThunk(id, formData);
     history.push(`/student/${id}`); 
   };
@@ -73,7 +73,7 @@ const mapState = (state) => ({
 // Map dispatch to props
 const mapDispatch = (dispatch) => ({
   fetchStudent: (id) => dispatch(fetchStudentThunk(id)),
-  editStudentThunk: (id, student) => dispatch(editStudentThunk(id, student)),
+  editStudentThunk: (id, studentData) => dispatch(editStudentThunk(id, studentData)),
   deleteStudentThunk: (id) => dispatch(deleteStudentThunk(id)),
 });
 

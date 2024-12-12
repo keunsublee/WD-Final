@@ -62,6 +62,7 @@ const EditStudentView = ({ campus,student, handleChange, handleSubmit, handleDel
         </div>
         <br/>
         <button type="submit">Save Changes</button>
+        <br/> <br/>
       </form>
 
       {/* Display campus details if student is enrolled */}
@@ -73,7 +74,7 @@ const EditStudentView = ({ campus,student, handleChange, handleSubmit, handleDel
       ) : (
         <p>This student is not enrolled at any campus.</p>
       )}
-
+       <br/>
       <button onClick={handleDeleteStudent}>Delete Student</button>
     </div>
   );

@@ -6,7 +6,6 @@ passes data (if any) as props to the corresponding View component.
 If needed, it also defines the component's "connect" function.
 ================================================== */
 import Header from './Header';
-import { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, useHistory } from "react-router-dom";
 import React, { useEffect } from 'react';
@@ -59,7 +58,7 @@ const mapDispatch = (dispatch) => {
   return {
     fetchAllStudents: () => dispatch(fetchAllStudentsThunk()),
     deleteStudent: (studentId) => dispatch(deleteStudentThunk(studentId)),
-    editStudent: (studentId, student) => dispatch(editStudentThunk(studentId, student))
+    editStudent: (campus) => dispatch(editStudentThunk(campus))
   };
 };
 

@@ -49,10 +49,10 @@ export const addCampusThunk = (campus) => async (dispatch) => {
   }
 };
 
-export const editCampusThunk = (campus) => async (dispatch) => {
+export const editCampusThunk = (id, campus) => async (dispatch) => {
   try {
     // Assume you have an API function `createCampus` to send the campus data to the server.
-    const res = await axios.put(`/api/campuses/${campus.id}`, campus); // Example API endpoint
+    const res = await axios.put(`/api/campuses/${id}`, campus); // Example API endpoint
 
     dispatch(ac.editCampus(res.data));
 
@@ -120,12 +120,12 @@ export const deleteStudentThunk = studentId => async dispatch => {  // The THUNK
 
 // Edit Student
 // THUNK CREATOR:
-export const editStudentThunk = student => async dispatch => {  // The THUNK
+export const editStudentThunk = (id, student) => async dispatch => {  // The THUNK
   try {
     // API "put" call to update student (based on "id" and "student" object's data) from database
-    let updatedStudent = await axios.put(`/api/students/${student.id}`, student); 
+    let updatedStudent = await axios.put(`/api/students/${id}`, student); 
     // Update successful so change state with dispatch
-    dispatch(ac.editStudent(updatedStudent));
+    dispatch(ac.editStudent(updatedStudent.data));
     return updatedStudent.data;
   } catch(err) {
     console.error(err);

@@ -17,7 +17,7 @@ const EditCampusView = ({ campus, deleteCampus, editCampus,handleChange, handleS
           onChange={handleChange}
         />
       </div>
-
+      <br/>
       <div>
         <label htmlFor="address">Address:</label>
         <input
@@ -28,6 +28,7 @@ const EditCampusView = ({ campus, deleteCampus, editCampus,handleChange, handleS
           onChange={handleChange}
         />
       </div>
+      <br/>
       <div>
         <label htmlFor="description">Description:</label>
         <textarea
@@ -37,6 +38,7 @@ const EditCampusView = ({ campus, deleteCampus, editCampus,handleChange, handleS
           onChange={handleChange}
         />
       </div>
+      <br/>
       <div>
         <label htmlFor="imageUrl">Image URL:</label>
         <input
@@ -47,12 +49,14 @@ const EditCampusView = ({ campus, deleteCampus, editCampus,handleChange, handleS
           onChange={handleChange}
         />
       </div>
+      <br/>
       <button type="submit">Save Changes</button>
+      <br/> <br/>
     </form>
   
           {/* Delete campus button */}
           <button onClick={() => deleteCampus(campus.id)}>Delete Campus</button>
-     
+          <br/> <br/>
 
         {/* Navigation back to campuses */}
         <Link to="/campuses">Back to Campuses</Link>

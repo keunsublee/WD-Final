@@ -32,7 +32,7 @@ export const fetchAllStudents = (students) => {
 export const addCampus = (campus) => {
   return {
     type: at.ADD_CAMPUS,
-    campus,
+    payload: campus,
   };
 };
 export const editCampus = (campus) => {

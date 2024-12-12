@@ -8,7 +8,13 @@ import { Link } from "react-router-dom";
 
 // Take in props data to construct the component
 const CampusView = ({ campus, deleteStudent, deleteCampus, editCampus }) => {
-
+  if (!campus) {
+    return (
+      <div>
+        <p>. . . </p>
+      </div>
+    );
+  }
   // Render a single Campus view with list of its students
   return (
     <div>
