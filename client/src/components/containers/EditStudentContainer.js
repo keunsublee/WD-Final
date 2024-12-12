@@ -13,7 +13,7 @@ const EditStudentContainer = ({ student, fetchStudent, editStudentThunk, deleteS
     firstname: '',
     lastname: '',
     email: '',
-    gpa: 0,
+    GPA: '',
     imageUrl: ''
   });
 
@@ -27,7 +27,7 @@ const EditStudentContainer = ({ student, fetchStudent, editStudentThunk, deleteS
         firstname: student.firstname || '',
         lastname: student.lastname || '',
         email: student.email || '',
-        gpa: student.gpa || '',
+        GPA: student.GPA || '',
         imageUrl: student.imageUrl || ''
       });
     }
@@ -42,8 +42,9 @@ const EditStudentContainer = ({ student, fetchStudent, editStudentThunk, deleteS
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('formData:', formData.GPA);
     await editStudentThunk(id, formData);
-    history.push(`/students/${id}`); 
+    history.push(`/student/${id}`); 
   };
 
   const handleDeleteStudent = async () => {

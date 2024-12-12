@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const EditStudentView = ({ student, handleChange, handleSubmit, handleDeleteStudent }) => {
+const EditStudentView = ({ campus,student, handleChange, handleSubmit, handleDeleteStudent }) => {
 
   return (
     <div>
@@ -17,6 +17,7 @@ const EditStudentView = ({ student, handleChange, handleSubmit, handleDeleteStud
             onChange={handleChange}
           />
         </div>
+        <br/>
         <div>
           <label htmlFor="lastname">Last Name:</label>
           <input
@@ -27,6 +28,7 @@ const EditStudentView = ({ student, handleChange, handleSubmit, handleDeleteStud
             onChange={handleChange}
           />
         </div>
+        <br/>
         <div>
           <label htmlFor="email">Email:</label>
           <input
@@ -37,6 +39,7 @@ const EditStudentView = ({ student, handleChange, handleSubmit, handleDeleteStud
             onChange={handleChange}
           />
         </div>
+        <br/>
         <div>
           <label htmlFor="GPA">GPA:</label>
           <textarea
@@ -46,6 +49,7 @@ const EditStudentView = ({ student, handleChange, handleSubmit, handleDeleteStud
             onChange={handleChange}
           />
         </div>
+        <br/>
         <div>
           <label htmlFor="imageUrl">Image URL:</label>
           <input
@@ -56,6 +60,7 @@ const EditStudentView = ({ student, handleChange, handleSubmit, handleDeleteStud
             onChange={handleChange}
           />
         </div>
+        <br/>
         <button type="submit">Save Changes</button>
       </form>
 

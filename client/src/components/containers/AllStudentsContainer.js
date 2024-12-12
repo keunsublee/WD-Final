@@ -8,34 +8,42 @@ If needed, it also defines the component's "connect" function.
 import Header from './Header';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from "react-router-dom";
+import { withRouter, useHistory } from "react-router-dom";
+import React, { useEffect } from 'react';
 
 import { 
   fetchAllStudentsThunk,
-  deleteStudentThunk
+  deleteStudentThunk,
+  editStudentThunk
 } from '../../store/thunks';
 
 import AllStudentsView from '../views/AllStudentsView';
 
-class AllStudentsContainer extends Component {
-  // Get all students data from back-end database
-  componentDidMount() {
-    this.props.fetchAllStudents();
-  }
+const AllStudentsContainer = ({ allStudents, fetchAllStudents, deleteStudent, editStudent }) => {
+  const history = useHistory();
+  useEffect(() => {
+    fetchAllStudents();
+  }, [fetchAllStudents]);
+
+  const handleEditStudent = (studentId) => {
+    history.push(`/editstudent/${studentId}`); // Redirect to the edit campus page
+  };
+
 
   // Render All Students view by passing all students data as props to the corresponding View component
-  render(){
+
     return(
       <div>
         <Header />
         <AllStudentsView 
-          students={this.props.allStudents}
-          deleteStudent={this.props.deleteStudent}   
+          allStudents={allStudents}
+          deleteStudent={deleteStudent}  
+          editStudent={handleEditStudent} 
         />
       </div>
-    )
-  }
-}
+    );
+  
+};
 
 // The following 2 input arguments are passed to the "connect" function used by "AllStudentsContainer" component to connect to Redux Store.
 // 1. The "mapState" argument specifies the data from Redux Store that the component needs.
@@ -51,6 +59,7 @@ const mapDispatch = (dispatch) => {
   return {
     fetchAllStudents: () => dispatch(fetchAllStudentsThunk()),
     deleteStudent: (studentId) => dispatch(deleteStudentThunk(studentId)),
+    editStudent: (studentId, student) => dispatch(editStudentThunk(studentId, student))
   };
 };
 

@@ -18,8 +18,7 @@ const StudentView = ({ student, deleteStudent }) => {
       <div>
         <h2>{`${student.firstname} ${student.lastname}`}</h2>
         <p><strong>Email:</strong> {student.email}</p>
-        <p><strong>Address:</strong> {student.address}</p>
-        <p><strong>Description:</strong> {student.description}</p>
+        <p><strong>GPA:</strong> {student.GPA}</p>
         <p><strong>Image:</strong> <img src={student.imageUrl} alt={student.name} /></p>
 
         {/* Display campus details if student is enrolled */}

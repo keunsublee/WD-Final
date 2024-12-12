@@ -6,27 +6,40 @@ passes data (if any) as props to the corresponding View component.
 If needed, it also defines the component's "connect" function.
 ================================================== */
 import Header from './Header';
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchStudentThunk, deleteStudentThunk } from "../../store/thunks";
+import { fetchStudentThunk, deleteStudentThunk, editStudentThunk, fetchCampusThunk } from "../../store/thunks";
 import { StudentView } from "../views";
+import { useParams, useHistory } from "react-router-dom";
 
-class StudentContainer extends Component {
-  // Get student data from back-end database
-  componentDidMount() {
-    //getting student ID from url
-    this.props.fetchStudent(this.props.match.params.id);
-  }
-
-  // Render Student view by passing student data as props to the corresponding View component
-  render() {
+  const StudentContainer = ({ student, fetchStudent, deleteStudent, editStudent }) => {
+    const { id } = useParams(); 
+    const history = useHistory();
+  
+    // Fetch the specific campus data when the component mounts
+    useEffect(() => {
+      fetchStudent(id);
+    }, [id, fetchStudent]);
+    
+    const handleDeleteStudent = async (studentId) => {
+      await deleteStudent(studentId);
+      history.push('/students'); // Redirect to the campuses page
+    };
+  
+    const handleEditStudent = (studentId) => {
+      history.push(`/editstudent/${studentId}`); 
+    };
+  
+  
     return (
       <div>
         <Header />
-        <StudentView student={this.props.student} />
+        <StudentView 
+        student={student} 
+        deleteStudent={handleDeleteStudent} 
+        editStudent ={handleEditStudent}/>
       </div>
     );
-  }
 }
 
 // The following 2 input arguments are passed to the "connect" function used by "StudentContainer" to connect to Redux Store.  
@@ -41,7 +54,9 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchStudent: (id) => dispatch(fetchStudentThunk(id)),
-    deleteStudent: (id) => dispatch(deleteStudentThunk(id))
+    deleteStudent: (id) => dispatch(deleteStudentThunk(id)),
+    editStudent: (id) => dispatch(editStudentThunk(id)),
+    fetchCampus: (id) => dispatch(fetchCampusThunk(id))
   };
 };
 
