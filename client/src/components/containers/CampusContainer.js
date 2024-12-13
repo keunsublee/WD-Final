@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import { fetchCampusThunk, fetchStudentThunk, deleteStudentThunk, deleteCampusThunk, editCampusThunk } from '../../store/thunks';
+import { fetchCampusThunk, fetchStudentThunk, addStudentThunk, editStudentThunk, deleteStudentThunk, deleteCampusThunk, editCampusThunk } from '../../store/thunks';
 
 import { CampusView } from '../views';
 import Header from './Header';
+import { editStudent } from '../../store/actions/actionCreators';
 
 const CampusContainer = ({ campus, fetchCampus, deleteStudent, deleteCampus, editCampus }) => {
   const { id } = useParams(); 
@@ -25,10 +26,30 @@ const CampusContainer = ({ campus, fetchCampus, deleteStudent, deleteCampus, edi
     history.push(`/editcampus/${campusId}`); // Redirect to the edit campus page
   };
 
+  const handleAddStudent = () => {
+    history.push('/addstudent');
+  }
+
+  const handleEditStudent = (studentId) => {
+    history.push(`/editstudent/${studentId}`);
+  }
+  
+  const handleDeleteStudent = async (studentId) => {
+    await deleteStudent(studentId);
+    fetchCampus(id);
+  }
+
   return (
     <div>
       <Header />
-      <CampusView campus={campus} deleteCampus={handleDeleteCampus} editCampus={handleEditCampus}/>
+      <CampusView 
+      campus={campus} 
+      deleteCampus={handleDeleteCampus} 
+      editCampus={handleEditCampus}
+      addStudent={handleAddStudent}
+      editStudent={handleEditStudent}
+      deleteStudent={handleDeleteStudent}
+      />
     </div>
   );
 };
@@ -50,7 +71,9 @@ const mapDispatch = (dispatch) => {
     fetchStudent: (id) => dispatch(fetchStudentThunk(id)),
     deleteStudent: (id) => dispatch(deleteStudentThunk(id)),
     deleteCampus: (id) => dispatch(deleteCampusThunk(id)),
-    editCampus: (id) => dispatch(editCampusThunk(id))
+    editCampus: (id) => dispatch(editCampusThunk(id)),
+    addStudent: (student) => dispatch(addStudentThunk(student)),
+    editStudent: (student) => dispatch(editStudentThunk(student)),
   };
 };
 
