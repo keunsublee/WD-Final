@@ -2,8 +2,7 @@
 
 .DS_Store
 node_modules
-package-lock.json
-package.json
+
 
 ### client
 /client/node_modules

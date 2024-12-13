@@ -45,8 +45,8 @@ const EditCampusContainer = ({ campus, fetchCampus, editCampus, deleteCampus, fe
   const handleSubmit = async (e) => {
     e.preventDefault();
     await editCampus(id, formData);
-    setRedirectId(id);
-    setRedirect(true);
+    history.push(`/campus/${id}`);
+    // setRedirect(true);
   };
 
   const handleDeleteCampus = async () => {
@@ -67,7 +67,6 @@ const EditCampusContainer = ({ campus, fetchCampus, editCampus, deleteCampus, fe
         campus={formData}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        formData={formData}
         deleteCampus={handleDeleteCampus}
       />
     </div>
