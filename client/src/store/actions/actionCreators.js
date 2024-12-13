@@ -38,7 +38,7 @@ export const addCampus = (campus) => {
 export const editCampus = (campus) => {
   return {
     type: at.EDIT_CAMPUS,
-    campus,
+    payload: campus,
   };
 };
 

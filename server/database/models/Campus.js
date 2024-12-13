@@ -26,7 +26,7 @@ const Campus = db.define("campus", {
   imageUrl: {
     type: Sequelize.STRING,
     allowNull: true,
-    defaultValue: 'https://via.placeholder.com/150'
+    defaultValue: 'https://www.hunter.cuny.edu/facilities/pressroom/homepage/west-building-main-campus/image'
   }
 });
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const EditStudentView = ({ campus, student, handleChange, handleSubmit, handleDeleteStudent }) => {
+const EditStudentView = ({ original,  student, handleChange, handleSubmit, handleDeleteStudent }) => {
 
   return (
     <div>
@@ -45,7 +45,7 @@ const EditStudentView = ({ campus, student, handleChange, handleSubmit, handleDe
         <br/>
         <div>
           <label htmlFor="GPA">GPA:</label>
-          <textarea
+          <input
             id="GPA"
             name="GPA"
             value={student.GPA}
@@ -69,10 +69,10 @@ const EditStudentView = ({ campus, student, handleChange, handleSubmit, handleDe
       </form>
 
       {/* Display campus details if student is enrolled */}
-      {student.campus ? (
+      {original.campus ? (
         <div>
-          <p><strong>Enrolled at campus:</strong> {student.campus.name}</p>
-          <Link to={`/campus/${student.campus.id}`}>View Campus Details</Link>
+          <p><strong>Enrolled at campus:</strong> {original.campus.name}</p>
+          <Link to={`/campus/${original.campus.id}`}>View Campus Details</Link>
         </div>
       ) : (
         <p>This student is not enrolled at any campus.</p>

@@ -59,6 +59,7 @@ const EditStudentContainer = ({ student, fetchStudent, editStudentThunk, deleteS
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         handleDeleteStudent={handleDeleteStudent}
+        original={student}
       />
     </div>
   );
