@@ -11,10 +11,9 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import NewStudentView from '../views/NewStudentView';
-import { addStudentThunk } from '../../store/thunks';
+import { addStudentThunk, fetchAllCampusesThunk, fetchCampusThunk } from '../../store/thunks';
 
 class NewStudentContainer extends Component {
-  // Initialize state
   constructor(props){
     super(props);
     this.state = {
@@ -25,20 +24,33 @@ class NewStudentContainer extends Component {
       imageUrl: "",
       campusId: null, 
       redirect: false, 
-      redirectId: null
+      redirectId: null,
+      campuses: []
     };
   }
 
-  // Capture input data when it is entered
+  componentDidMount() {
+    this.props.fetchAllCampuses();
+    this.props.fetchCampus();
+  }
+  fetchCampuses = async () => {
+    try {
+      const campuses = await this.props.fetchAllCampuses();
+      this.setState({ campuses });
+    } catch (error) {
+      console.error("Failed to fetch campuses:", error);
+    }
+  };
+
+
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
 
-  // Take action after user click the submit button
   handleSubmit = async event => {
-    event.preventDefault();  // Prevent browser reload/refresh after submit.
+    event.preventDefault();  
 
     let student = {
         firstname: this.state.firstname,
@@ -49,10 +61,15 @@ class NewStudentContainer extends Component {
         campusId: this.state.campusId
     };
     
-    // Add new student in back-end database
+      const gpa = parseFloat(this.state.GPA);
+      if (isNaN(gpa) || gpa < 0 || gpa > 4) {
+        alert("GPA must be between 0 and 4."); 
+        return;
+      }
+
+ 
     let newStudent = await this.props.addStudent(student);
 
-    // Update state, and trigger redirect to show the new student
     this.setState({
       firstname: "", 
       lastname: "", 
@@ -65,19 +82,15 @@ class NewStudentContainer extends Component {
     });
   }
 
-  // Unmount when the component is being removed from the DOM:
   componentWillUnmount() {
       this.setState({redirect: false, redirectId: null});
   }
 
-  // Render new student input form
   render() {
-    // Redirect to new student's page after submit
     if(this.state.redirect) {
       return (<Redirect to={`/student/${this.state.redirectId}`}/>)
     }
 
-    // Display the input form via the corresponding View component
     return (
       <div>
         <Header />
@@ -96,6 +109,8 @@ class NewStudentContainer extends Component {
 const mapDispatch = (dispatch) => {
     return({
         addStudent: (student) => dispatch(addStudentThunk(student)),
+        fetchCampus: () => dispatch(fetchCampusThunk()),
+        fetchAllCampuses: () => dispatch(fetchAllCampusesThunk())
     })
 }
 

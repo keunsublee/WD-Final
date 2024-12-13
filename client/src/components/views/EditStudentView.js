@@ -48,6 +48,8 @@ const EditStudentView = ({ original,  student, handleChange, handleSubmit, handl
           <input
             id="GPA"
             name="GPA"
+            min="0"       
+            max="4" 
             value={student.GPA}
             onChange={handleChange}
           />

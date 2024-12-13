@@ -42,6 +42,11 @@ const EditStudentContainer = ({ student, fetchStudent, editStudentThunk, deleteS
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const gpa = parseFloat(formData.GPA);
+    if (isNaN(gpa) || gpa < 0 || gpa > 4) {
+      alert("GPA must be between 0 and 4."); 
+      return;
+    }
     await editStudentThunk(id, formData);
     history.push(`/student/${id}`); 
   };
