@@ -5,7 +5,6 @@ import { fetchCampusThunk, fetchStudentThunk, addStudentThunk, editStudentThunk,
 
 import { CampusView } from '../views';
 import Header from './Header';
-import { editStudent } from '../../store/actions/actionCreators';
 
 const CampusContainer = ({ campus, fetchCampus, deleteStudent, deleteCampus, editCampus }) => {
   const { id } = useParams(); 
@@ -27,7 +26,7 @@ const CampusContainer = ({ campus, fetchCampus, deleteStudent, deleteCampus, edi
   };
 
   const handleAddStudent = () => {
-    history.push('/addstudent');
+    history.push('/newstudent');
   }
 
   const handleEditStudent = (studentId) => {

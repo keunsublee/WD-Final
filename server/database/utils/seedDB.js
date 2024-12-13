@@ -37,7 +37,7 @@ const seedDB = async () => {
         lastname: "Smith",
 		email: "a@a.a",
 		GPA: "4.0",
-		imageUrl: "https://via.placeholder.com/150"
+		imageUrl: "https://cdn.prod.website-files.com/62d84e447b4f9e7263d31e94/637627ca9eebde45ae5f394c_Underwater-Nun.jpeg"
 	});
 	// Create a new student for a campus
 	const dummy_student2 = await Student.create({

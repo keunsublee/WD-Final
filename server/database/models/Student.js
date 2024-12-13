@@ -31,7 +31,7 @@ const Student = db.define("student", {
   imageUrl: {
     type: Sequelize.STRING,
     allowNull: true,
-    defaultValue: "https://via.placeholder.com/150"
+    defaultValue: "https://cdn.prod.website-files.com/62d84e447b4f9e7263d31e94/637627ca9eebde45ae5f394c_Underwater-Nun.jpeg"
   }
 
 });
