@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const EditCampusView = ({ campus, deleteCampus, editCampus,handleChange, handleSubmit  }) => {
+const EditCampusView = ({ campus, deleteCampus, handleChange, handleSubmit  }) => {
 
   return (
     <div>
